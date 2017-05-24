@@ -20,6 +20,8 @@ fun main(args:Array<String>){
 
     println("===============Starting HISD3 Print Utils===============")
 
+    System.setProperty("java.awt.headless", "true")
+
     initExceptionHandler {
         e -> println(e.message)
         e.printStackTrace()

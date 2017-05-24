@@ -1,0 +1,4 @@
+lpr -P Zebra_Technologies_ZTC_HC100_300dpi_ZPL -o raw sample.zpl
+
+
+cupsctl WebInterface=yes

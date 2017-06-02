@@ -2,17 +2,14 @@
 package com.hisd3.printutils.print
 
 import com.hisd3.printutils.dto.PrinterDetail
-import de.spqrinfo.cups4j.CupsClient
-import org.apache.commons.lang3.SystemUtils
 import javax.print.PrintServiceLookup
 import javax.print.attribute.HashPrintRequestAttributeSet
-import javax.print.attribute.PrintRequestAttributeSet
 import javax.print.SimpleDoc
 import javax.print.DocFlavor
-import javax.print.DocPrintJob
 import javax.print.attribute.standard.PrinterName
 import javax.print.attribute.HashPrintServiceAttributeSet
-import javax.print.attribute.PrintServiceAttributeSet
+import java.io.ByteArrayInputStream
+
 
 
 
@@ -21,22 +18,29 @@ import javax.print.attribute.PrintServiceAttributeSet
  */
 class PrinterService{
 
-    fun rawprint(printerName: String, content: String): String {
+    fun rawprint(printerName: String, content: ByteArray): String {
         var res = ""
         val printServiceAttributeSet = HashPrintServiceAttributeSet()
         printServiceAttributeSet.add(PrinterName(printerName, null))
-        val printServices = PrintServiceLookup.lookupPrintServices(null, printServiceAttributeSet)
-        if (printServices.size != 1) {
+        //val printServices = PrintServiceLookup.lookupPrintServices(null, printServiceAttributeSet)
+        val printServices = PrintServiceLookup.lookupPrintServices(null, null)
+
+        if (printServices.size < 1) {
             return "Can't  select printer :" + printerName
         }
-        val printdata = content.toByteArray()
-        val pservice = printServices[0]
+        val printdata = content
+        val pservice = printServices[5]
         val job = pservice.createPrintJob()
         val flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE
+
+       // val `is` = ByteArrayInputStream(printdata)
+        //val flavor = DocFlavor.INPUT_STREAM.AUTOSENSE
+
+
         val doc = SimpleDoc(printdata, flavor, null)
         val aset = HashPrintRequestAttributeSet()
         try {
-            job.print(doc, aset)
+            job.print(doc, null)
         } catch (e: Exception) {
             res = e.message?:""
 

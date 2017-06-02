@@ -5,12 +5,45 @@ import com.hisd3.printutils.dto.PrinterDetail
 import de.spqrinfo.cups4j.CupsClient
 import org.apache.commons.lang3.SystemUtils
 import javax.print.PrintServiceLookup
+import javax.print.attribute.HashPrintRequestAttributeSet
+import javax.print.attribute.PrintRequestAttributeSet
+import javax.print.SimpleDoc
+import javax.print.DocFlavor
+import javax.print.DocPrintJob
+import javax.print.attribute.standard.PrinterName
+import javax.print.attribute.HashPrintServiceAttributeSet
+import javax.print.attribute.PrintServiceAttributeSet
+
+
 
 /**
  * Created by albertoclarit on 5/23/17.
  */
 class PrinterService{
 
+    fun rawprint(printerName: String, content: String): String {
+        var res = ""
+        val printServiceAttributeSet = HashPrintServiceAttributeSet()
+        printServiceAttributeSet.add(PrinterName(printerName, null))
+        val printServices = PrintServiceLookup.lookupPrintServices(null, printServiceAttributeSet)
+        if (printServices.size != 1) {
+            return "Can't  select printer :" + printerName
+        }
+        val printdata = content.toByteArray()
+        val pservice = printServices[0]
+        val job = pservice.createPrintJob()
+        val flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE
+        val doc = SimpleDoc(printdata, flavor, null)
+        val aset = HashPrintRequestAttributeSet()
+        try {
+            job.print(doc, aset)
+        } catch (e: Exception) {
+            res = e.message?:""
+
+        }
+
+        return res
+    }
 
     fun getPrinterNames(): List<PrinterDetail>{
        val printers = mutableListOf<PrinterDetail>()

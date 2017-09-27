@@ -2,3 +2,4 @@ lpr -P Zebra_Technologies_ZTC_HC100_300dpi_ZPL -o raw sample.zpl
 
 
 cupsctl WebInterface=yes
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home

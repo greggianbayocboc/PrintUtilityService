@@ -23,13 +23,14 @@ class PrinterService{
         val printServiceAttributeSet = HashPrintServiceAttributeSet()
         printServiceAttributeSet.add(PrinterName(printerName, null))
         //val printServices = PrintServiceLookup.lookupPrintServices(null, printServiceAttributeSet)
-        val printServices = PrintServiceLookup.lookupPrintServices(null, null)
+        //val printServices = PrintServiceLookup.lookupPrintServices(null, null)
 
-        if (printServices.size < 1) {
+       /* if (printServices.size < 1) {
+            println("Can't  select printer :" + printerName)
             return "Can't  select printer :" + printerName
-        }
+        }*/
         val printdata = content
-        val pservice = printServices[5]
+        val pservice = PrintServiceLookup.lookupDefaultPrintService()   //printServices[5]
         val job = pservice.createPrintJob()
         val flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE
 

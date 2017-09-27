@@ -11,6 +11,8 @@
         <kotlin.version>1.1.2-2</kotlin.version>
         <main.class>com.hisd3.printutils.ApplicationKt</main.class>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
 
     <dependencies>

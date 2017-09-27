@@ -49,7 +49,7 @@ fun main(args:Array<String>){
     post("/printondefault"){
         req, res ->
         res.type("application/json")
-        printerService.rawprint("Zebra Technologies ZTC HC100-300dpi ZPL",req.bodyAsBytes())
+        printerService.rawprint("RAW",req.bodyAsBytes())
 
         "OK"
     }

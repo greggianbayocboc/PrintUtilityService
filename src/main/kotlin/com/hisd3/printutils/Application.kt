@@ -55,6 +55,15 @@ fun main(args:Array<String>){
     }
 
 
+    post("/printondefaultGET"){
+        req, res ->
+        res.type("application/json")
+        printerService.rawprint("RAW",req.params("wristband_data").toByteArray())
+
+        "OK"
+    }
+
+
 }
 
 private fun enableCORS(origin: String, methods: String, headers: String) {
